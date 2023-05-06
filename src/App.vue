@@ -1,16 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <img alt="Main logo" src="./assets/main_image.png">
+    <HtmlToPdfUser msg="Welcome to Your Vue.js App"/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HtmlToPdfUser from "@/components/HtmlToPdfUser.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    HtmlToPdfUser,
+  },
 }
 </script>
 
