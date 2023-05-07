@@ -2,8 +2,13 @@
   <div>
     <h1>Huge HTML array to PDF Converter</h1>
     <button @click="convertToPdf" :disabled="isInProgress">Convert</button>
+    <div>
+      <p>{{progressPercentage}}% complete</p>
+      <progress :value="progressPercentage" max="100"></progress>
+    </div>
+    <br/>
     <div ref="pdfContent">
-      <sample-vue-component
+      <invoice-bill
           v-for="(item, index) in items"
           :key="item.id"
           :title="item.title"
@@ -11,21 +16,17 @@
           v-show="false"
       />
     </div>
-    <div>
-      <p>{{progressPercentage}}% complete</p>
-      <progress :value="progressPercentage" max="100"></progress>
-    </div>
   </div>
 </template>
 
 <script>
-import SampleVueComponent from './SampleVueComponent.vue';
 import {HtmlToPdfDownloader} from "@/components/htmlToPdfDownloader";
+import InvoiceBill from "@/components/InvoiceBill.vue";
 
 export default {
   name: 'HtmlToPdfUser',
   components: {
-    SampleVueComponent,
+    InvoiceBill,
   },
   data() {
     return {
@@ -41,7 +42,7 @@ export default {
     this.htmlToPdfDownloader = new HtmlToPdfDownloader('a4');
     // target html array 구성을 위한 binding data 초기 셋팅
     for (let i=0; i<100; i++) {
-      this.items.push({id: i, title: `Sample Title ${i}`})
+      this.items.push({id: i, title: `${i} 번째 `})
     }
   },
   methods: {
@@ -59,8 +60,8 @@ export default {
 
       await this.htmlToPdfDownloader.htmlsToPdfByChunk(
           this.targetRefs,
-          'result',
-          10,
+          'invoiceBill',
+          30,
           (progress) => {this.progressPercentage = Math.floor(progress)}
       );
 

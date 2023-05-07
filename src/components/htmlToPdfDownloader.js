@@ -12,15 +12,15 @@ export class HtmlToPdfDownloader {
     constructor(paperFormat) {
         this.defaultOption = {
             margin: 0,
-            // filename: filename,
+            // filename: out.pdf,
             image: {type: 'jpg', quality: 1},
             html2canvas: {
                 useCORS: true,
+                allowTaint: true,
                 scrollY: 0,
                 scale: 2,
                 dpi: 300,
                 letterRendering: true,
-                allowTraint: false,
                 ignoreElements: function (element) {
                     if (element.id === 'pdf-ignore-area') {
                         return true;

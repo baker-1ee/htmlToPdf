@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HtmlToPdfUser msg="Welcome to Your Vue.js App"/>
+    <HtmlToPdfUser msg="Welcome to HTML to PDF App"/>
   </div>
 </template>
 
