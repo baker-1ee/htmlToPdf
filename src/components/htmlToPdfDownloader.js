@@ -79,9 +79,10 @@ export class HtmlToPdfDownloader {
      * @param elements html element array
      * @param filename pdf 파일명
      * @param chunkSize pdf 파일당 최대 page 제한
+     * @param callback 진행률을 caller 에 전달할 콜백함수
      * @returns {Promise<void>}
      */
-    async htmlsToPdfByChunk(elements, filename, chunkSize) {
+    async htmlsToPdfByChunk(elements, filename, chunkSize, callback) {
         const start = performance.now();
         // elements 배열을 chunkSize 만큼 잘라서 분할된 배열 생성
         const chunks = [];
@@ -97,7 +98,7 @@ export class HtmlToPdfDownloader {
             await this.htmlsToPdf(chunks[i], `${filename}${i}`).then(() => {
                 completedChunks++;
                 const progress = (completedChunks / totalChunks) * 100;
-                console.log(`진행률: ${progress.toFixed(2)}%`);
+                callback(progress);
             });
         }
 
