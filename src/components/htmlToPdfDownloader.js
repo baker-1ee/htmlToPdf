@@ -91,14 +91,19 @@ export class HtmlToPdfDownloader {
         }
 
         // 분할된 배열에 대해서 htmlsToPdf 함수 호출
-        const pdfPromises = chunks.map(async (chunk, index) => {
-            await this.htmlsToPdf(chunk, `${filename}${index}`);
-        });
-
-        await Promise.all(pdfPromises);
+        const totalChunks = chunks.length;
+        let completedChunks = 0;
+        for (let i = 0; i < totalChunks; i++) {
+            await this.htmlsToPdf(chunks[i], `${filename}${i}`).then(() => {
+                completedChunks++;
+                const progress = (completedChunks / totalChunks) * 100;
+                console.log(`진행률: ${progress.toFixed(2)}%`);
+            });
+        }
 
         const end = performance.now();
         console.log(`htmlsToPdfByChunk 수행 시간: ${end - start}ms`);
+
     }
 
 }

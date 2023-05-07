@@ -33,7 +33,7 @@ export default {
   created() {
     this.htmlToPdfDownloader = new HtmlToPdfDownloader('a4');
 
-    for (let i=0; i<30; i++) {
+    for (let i=0; i<1000; i++) {
       this.items.push({id: i, title: `Sample Title ${i}`})
     }
   },
@@ -44,7 +44,7 @@ export default {
       };
     },
     convertToPdf() {
-      this.htmlToPdfDownloader.htmlsToPdfByChunk(this.targetRefs,'output', 10);
+      this.htmlToPdfDownloader.htmlsToPdfByChunk(this.targetRefs,'output', 100);
     },
   }
 }
