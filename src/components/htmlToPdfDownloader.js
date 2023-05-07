@@ -49,23 +49,22 @@ export class HtmlToPdfDownloader {
      * @returns {Promise<*>}
      */
     async htmlsToPdf(elements, filename) {
-        const opt = {...this.defaultOption, filename : `${filename}.pdf`};
-        const clone = elements[0].cloneNode(true);
-        clone.style.display = "block";
-        let pdf = html2pdf().set(opt).from(clone).toPdf();
-        clone.remove();
-        for (let i = 1; i < elements.length; i++) {
+        const opt = {...this.defaultOption, filename: `${filename}.pdf`};
+        let pdf = null;
+        for (let i = 0; i < elements.length; i++) {
+            // html 이 화면에 보이지 않는 상태로 pdf 생성하면, 빈 페이지로 생성되기 때문에 html 복사 후 style 만 변경 한 뒤 pdf 생성
             const clone = elements[i].cloneNode(true);
             clone.style.display = "block";
-            pdf = pdf
-                .get('pdf')
-                .then((pdf) => {
-                    pdf.addPage();
-                })
-                .from(clone)
-                .toContainer()
-                .toCanvas()
-                .toPdf();
+            if (pdf == null) {
+                // pdf 첫 페이지
+                pdf = html2pdf().set(opt).from(clone).toPdf();
+            } else {
+                // pdf 두번째 페이지부터는 기존 pdf 에 이어붙임
+                pdf = pdf.get('pdf')
+                    .then((pdf) => pdf.addPage())
+                    .from(clone).toContainer().toCanvas().toPdf();
+            }
+            // 메모리 누수를 방지하기 위해 복사한 clone element 는 제거
             clone.remove();
         }
         return pdf.save().then(() => {
