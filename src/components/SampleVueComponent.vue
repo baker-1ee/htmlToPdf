@@ -24,13 +24,13 @@ export default {
 }
 
 h1 {
+  color: #b32a2a;
   font-size: 30px;
   margin-bottom: 10px;
 }
 
 p {
   font-size: 16px;
-  color: #b32a2a;
   margin-bottom: 20px;
 }
 

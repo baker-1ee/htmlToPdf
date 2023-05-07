@@ -7,8 +7,8 @@
           v-for="(item, index) in items"
           :key="item.id"
           :title="item.title"
-          v-show="true"
           :ref="addRef(index)"
+          v-show="false"
       />
     </div>
   </div>
@@ -25,13 +25,14 @@ export default {
   },
   data() {
     return {
-      items: [
-        { id: 1, title: 'Sample Title 1' },
-        { id: 2, title: 'Sample Title 2' },
-        { id: 3, title: 'Sample Title 3' },
-      ],
+      items: [],
       targetRefs: [],
     };
+  },
+  created() {
+    for (let i=0; i<120; i++) {
+      this.items.push({id: i, title: `Sample Title ${i}`})
+    }
   },
   methods: {
     addRef(index) {
@@ -40,8 +41,7 @@ export default {
       };
     },
     convertToPdf() {
-      console.log(this.targetRefs);
-      HtmlToPdfDownloader.htmlsToPdf('test.pdf', this.targetRefs);
+      HtmlToPdfDownloader.htmlsToPdfByChunk('chunk.pdf', this.targetRefs, 100);
     },
   }
 }
