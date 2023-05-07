@@ -2,12 +2,17 @@ import html2pdf from 'html2pdf.js';
 
 export class HtmlToPdfDownloader {
 
-    static htmlToPdf(filename, element) {
+    defaultOption = ''; // pdf 생성을 위한 option
 
-        const opt = {
-            includeHiddenHtml: true,
+    /**
+     * HTML To PDF 를 위한 생성자
+     * @param filename 생성할 pdf 파일명 (e.g. output)
+     * @param paperFormat 종이 포맷 (e.g. 'a4', 'a3', ...)
+     */
+    constructor(paperFormat) {
+        this.defaultOption = {
             margin: 0,
-            filename: filename,
+            // filename: filename,
             image: {type: 'jpg', quality: 1},
             html2canvas: {
                 useCORS: true,
@@ -22,33 +27,29 @@ export class HtmlToPdfDownloader {
                     }
                 },
             },
-            jspdf: {orientation: 'landscape', unit: 'mm', format: 'a3', compressPDF: true},
+            jspdf: {orientation: 'landscape', unit: 'mm', format: paperFormat, compressPDF: true},
         };
-
-        html2pdf().set(opt).from(element).save();
     }
 
+    /**
+     * html element 단건을 pdf 로 생성하여 다운로드
+     * @param element html element
+     * @param filename pdf 파일명
+     * @returns {Promise<*>}
+     */
+    async htmlToPdf(element, filename) {
+        const opt = {...this.defaultOption, filename : `${filename}.pdf`};
+        return html2pdf().set(opt).from(element).save();
+    }
 
-    static async htmlsToPdf(filename, elements) {
-        const opt = {
-            margin: 0,
-            filename: filename,
-            image: {type: 'jpg', quality: 1},
-            html2canvas: {
-                useCORS: true,
-                scrollY: 0,
-                scale: 2,
-                dpi: 300,
-                letterRendering: true,
-                allowTraint: false,
-                ignoreElements: function (element) {
-                    if (element.id === 'pdf-ignore-area') {
-                        return true;
-                    }
-                },
-            },
-            jspdf: {orientation: 'landscape', unit: 'mm', format: 'a4', compressPDF: true},
-        };
+    /**
+     * html element 배열을 여러 페이지의 pdf 로 생성하여 다운로드
+     * @param elements html element array
+     * @param filename pdf 파일명
+     * @returns {Promise<*>}
+     */
+    async htmlsToPdf(elements, filename) {
+        const opt = {...this.defaultOption, filename : `${filename}.pdf`};
         const clone = elements[0].cloneNode(true);
         clone.style.display = "block";
         let pdf = html2pdf().set(opt).from(clone).toPdf();
@@ -72,9 +73,17 @@ export class HtmlToPdfDownloader {
         });
     }
 
-    static async htmlsToPdfByChunk(filename, elements, chunkSize) {
+    /**
+     * chunk Size 단위로 html element 배열을 N건의 pdf 로 생성하여 다운로드
+     * 한번에 대량의 page 를 하나의 pdf 파일로 생성하면 성능 문제로 pdf 생성이 되지 않는 현상을 해결하기 위해 chunk 단위로 pdf 를 분리하여 생성
+     * pdf 파일명은 뒤에 인덱스가 추가되어 생성됨
+     * @param elements html element array
+     * @param filename pdf 파일명
+     * @param chunkSize pdf 파일당 최대 page 제한
+     * @returns {Promise<void>}
+     */
+    async htmlsToPdfByChunk(elements, filename, chunkSize) {
         const start = performance.now();
-
         // elements 배열을 chunkSize 만큼 잘라서 분할된 배열 생성
         const chunks = [];
         for (let i = 0; i < elements.length; i += chunkSize) {
@@ -84,9 +93,9 @@ export class HtmlToPdfDownloader {
 
         // 분할된 배열에 대해서 htmlsToPdf 함수 호출
         const pdfPromises = chunks.map(async (chunk, index) => {
-            const filenameWithIndex = filename.replace(/\.pdf$/, '') + index + '.pdf';
-            await this.htmlsToPdf(filenameWithIndex, chunk);
+            await this.htmlsToPdf(chunk, `${filename}${index}`);
         });
+
         await Promise.all(pdfPromises);
 
         const end = performance.now();

@@ -25,12 +25,15 @@ export default {
   },
   data() {
     return {
+      htmlToPdfDownloader: {},
       items: [],
       targetRefs: [],
     };
   },
   created() {
-    for (let i=0; i<120; i++) {
+    this.htmlToPdfDownloader = new HtmlToPdfDownloader('a4');
+
+    for (let i=0; i<30; i++) {
       this.items.push({id: i, title: `Sample Title ${i}`})
     }
   },
@@ -41,7 +44,7 @@ export default {
       };
     },
     convertToPdf() {
-      HtmlToPdfDownloader.htmlsToPdfByChunk('chunk.pdf', this.targetRefs, 100);
+      this.htmlToPdfDownloader.htmlsToPdfByChunk(this.targetRefs,'output', 10);
     },
   }
 }

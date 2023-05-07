@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img alt="Main logo" src="./assets/main_image.png">
     <HtmlToPdfUser msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
