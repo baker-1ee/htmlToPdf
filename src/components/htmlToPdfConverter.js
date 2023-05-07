@@ -1,6 +1,6 @@
 import html2pdf from 'html2pdf.js';
 
-export class HtmlToPdfDownloader {
+export class HtmlToPdfConverter {
 
     defaultOption = ''; // pdf 생성을 위한 option
 

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {HtmlToPdfDownloader} from "@/components/htmlToPdfDownloader";
+import {HtmlToPdfConverter} from "@/components/htmlToPdfConverter";
 import InvoiceBill from "@/components/InvoiceBill.vue";
 
 export default {
@@ -39,7 +39,7 @@ export default {
     };
   },
   created() {
-    this.htmlToPdfDownloader = new HtmlToPdfDownloader('a4');
+    this.htmlToPdfDownloader = new HtmlToPdfConverter('a4');
     // target html array 구성을 위한 binding data 초기 셋팅
     for (let i=0; i<100; i++) {
       this.items.push({id: i, title: `${i} 번째 `})

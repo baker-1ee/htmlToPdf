@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import HtmlToPdfUser from "@/components/HtmlToPdfUser.vue";
+import HtmlToPdfUser from "@/components/HtmlToPdfComponent.vue";
 
 export default {
   name: 'App',
