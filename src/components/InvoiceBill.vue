@@ -1,8 +1,8 @@
 <template>
-  <div ref="targetTemplate" class="statement">
+  <div ref="pdfArea" class="statement">
     <div class="statement-header">
       <img src="../assets/logo.png" width="80" height="100" alt="Logo" class="logo">
-      <h1>{{title}} 거래명세서</h1>
+      <h1>{{item.title}} 거래명세서</h1>
       <p class="statement-date">거래일자: 2023년 5월 1일</p>
     </div>
     <div class="statement-body">
@@ -104,8 +104,8 @@
 export default {
   name: "InvoiceBill",
   props: {
-    title: {
-      type: String,
+    item: {
+      type: Object,
     },
   }
 }
