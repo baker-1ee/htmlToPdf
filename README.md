@@ -19,13 +19,21 @@ npm run serve
 ```
 
 ## Demo
-아래와 같이 convert 버튼을 클릭하면, 사전에 설정한 chunk size 단위로 pdf 가 분할 생성 및 다운로드 된다.
+아래와 같이 버튼을 클릭하면, 사전에 설정한 pdf max page 단위로 pdf 가 분할 생성 및 다운로드 된다.
 
-진행률도 확인할 수 있으며, pdf 가 chunk size 단위로 생성 완료될 때마다 진행률이 업데이트 된다.
+전체 생성 page 대비 현재 생성 page 를 진행률로 확인할 수 있다.
 
-<img width="1443" alt="image" src="https://user-images.githubusercontent.com/67363545/236681871-9fe81ee0-0575-4189-9c97-8fb7babb4881.png">
+<img width="1441" alt="image" src="https://github.com/baker-1ee/htmlToPdf/assets/67363545/5ca0e792-0dc4-42bb-9573-56c18064b06b">
+
 
 ## Result
-생성 완료된 pdf 를 하나 열어보면 아래와 같이 여러 페이지로 chunk size 만큼 페이지가 생성되어있다.
 
-<img width="1456" alt="image" src="https://user-images.githubusercontent.com/67363545/236682155-ae470150-239e-4c82-81d1-557e1884a03c.png">
+아래와 같이 분할 생성되었다.
+
+<img width="712" alt="image" src="https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f389acc-e871-4a12-b335-61283584e755">
+
+
+
+파일 하나를 열어보면 아래와 같이 사전에 설정한 pdf max page 만큼 page 가 생성되었다.
+
+<img width="1243" alt="image" src="https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f337699-569a-49ac-bb5f-316447bb4241">
