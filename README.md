@@ -60,5 +60,3 @@ Opening one of the files, you'll see pages generated up to the preset maximum pa
 
 ![PDF Page Result Image](https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f337699-569a-49ac-bb5f-316447bb4241)
 
-I've written it as requested. If you need further modifications or have any other requests, please let me know.
-
