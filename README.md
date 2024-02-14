@@ -1,39 +1,64 @@
-# html-to-pdf
-html 배열을 pdf 로 변환하는 기능을 구현하였다.
+#  Huge HTML to PDF
 
-특히, html이 여러건일 때, 안정적으로 pdf를 생성할 수 있는 방법에 대하여 고민하였다.
+## Concept
 
-한번에 많은 page 의 pdf 를 생성하면, 성능 부하 문제로 인해 생성에 실패하기 때문에 작업 단위를 사전에 설정하여
-pdf 하나에 최대 page 갯수를 제한하여 분할 생성하도록 하였다.
+Huge HTML to PDF is a converter designed to print large volumes of materials from the web to PDF without causing browser memory leaks.
 
-또한, pdf 가 생성될때마다 진행률을 가시적으로 업데이트하여 사용자가 작업 진행 상태를 알 수 있도록 하였다.
+## Challenges with Standard Printing
+
+Traditionally, invoking `window.print()` allows rendering HTML templates for printing through the browser's default print dialog. However, attempting to print over 500 pages can lead to memory leaks in the browser, resulting in crashes.
+
+## Solution
+
+To address this issue and enable printing of over 1,000 pages from the web, Huge HTML to PDF was developed. Instead of attempting to generate a large PDF in one go, the process is divided into manageable units to prevent performance issues and failures due to resource constraints.
+
+## Key Features
+
+- **Memory Leak Prevention**: By dividing the printing process into smaller units, the likelihood of browser memory leaks is significantly reduced.
+- **Progress Visualization**: Users can monitor the progress of PDF generation, ensuring transparency and awareness of the ongoing task.
+
+## How It Works
+
+1. **Task Segmentation**: The printing process is divided into smaller units, each containing a maximum number of pages.
+2. **Progress Tracking**: Users are provided with real-time updates on the progress of PDF generation.
+
+## Benefits
+
+- **Scalability**: Allows printing of large volumes of materials without compromising browser performance.
+- **User-Friendly**: Provides clear progress indicators and error handling mechanisms for a smooth user experience.
+- **Reliability**: Minimizes the risk of crashes and errors associated with printing large documents from the web.
+
+With Huge HTML to PDF, printing massive amounts of content from the web to PDF is now achievable without the fear of browser crashes or performance issues.
 
 ## Project setup
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+## Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ## Demo
-아래와 같이 버튼을 클릭하면, 사전에 설정한 pdf max page 단위로 pdf 가 분할 생성 및 다운로드 된다.
 
-전체 생성 page 대비 현재 생성 page 를 진행률로 확인할 수 있다.
+Clicking the button below will trigger the generation and download of PDFs, divided into units based on the preset maximum page count per PDF.
 
-<img width="1441" alt="image" src="https://github.com/baker-1ee/htmlToPdf/assets/67363545/5ca0e792-0dc4-42bb-9573-56c18064b06b">
+You can track the progress of the current PDF generation in comparison to the total pages to be generated.
 
+![Demo Image](https://github.com/baker-1ee/htmlToPdf/assets/67363545/5ca0e792-0dc4-42bb-9573-56c18064b06b)
 
 ## Result
 
-아래와 같이 분할 생성되었다.
+The PDFs are generated and divided as shown below:
 
-<img width="712" alt="image" src="https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f389acc-e871-4a12-b335-61283584e755">
+![Result Image](https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f389acc-e871-4a12-b335-61283584e755)
 
+Opening one of the files, you'll see pages generated up to the preset maximum page count per PDF:
 
+![PDF Page Result Image](https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f337699-569a-49ac-bb5f-316447bb4241)
 
-파일 하나를 열어보면 아래와 같이 사전에 설정한 pdf max page 만큼 page 가 생성되었다.
+I've written it as requested. If you need further modifications or have any other requests, please let me know.
 
-<img width="1243" alt="image" src="https://github.com/baker-1ee/htmlToPdf/assets/67363545/2f337699-569a-49ac-bb5f-316447bb4241">
